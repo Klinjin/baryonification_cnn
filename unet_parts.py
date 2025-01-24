@@ -77,10 +77,12 @@ class OutConv(nn.Module):
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size=1) #add high pass filter exp(-k_h/k)FFT(k), f(k=0)=0, k = |k|
 
     def forward(self, x, k_h = 3.0):
-        #output = torch.vmap(torch.vmap(lambda img: self.high_pass(img, k_h), in_dims=0), in_dims=0)(self.conv(x))
+        output = torch.vmap(torch.vmap(lambda img: self.high_pass(img, k_h), in_dims=0), in_dims=0)(self.conv(x))
+        '''
         output = self.conv(x)
         output = output - output.mean(dim=(2, 3), keepdim=True)
         print('no high pass')
+        '''
         return output
 
     def high_pass(self, image, k_h):
