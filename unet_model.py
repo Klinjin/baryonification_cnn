@@ -53,7 +53,7 @@ class UNetFiLM(nn.Module):
                 nn.ReLU(),
                 nn.Linear(2048, 5888)#*channel each layer
                     )
-        
+    
 
     def forward(self, x, cond=None): #cond(6,)-->MLP score(N,)=weight+bias
         param = self.MLP(cond)
