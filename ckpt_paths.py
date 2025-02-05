@@ -27,10 +27,14 @@ path_UNet_Film_10_epochs_L1_epoch5_Fourier_weight_1e5_3_10_Butterworth_high_pass
 path_UNet_Film_10_epochs_L1_epoch10_Fourier_weight_1e5_1_10_Butterworth_high_pass_lr_1e3_adamw_1e2_25_thickness='/pscratch/sd/l/lindajin/LOGS/baryonize_DM/dca6e98452524e9c9797f56d152fe01c/checkpoints/latest-epoch=14-step=2600.ckpt'
 path_UNet_Film_10_epochs_L1_epoch2_Fourier_weight_1e5_3_10_Butterworth_lr_1e3_adamw_1e2_25_thickness = '/pscratch/sd/l/lindajin/LOGS/baryonize_DM/063589d4efa3418d9728cd32a7ab2ee3/checkpoints/latest-epoch=9-step=1750.ckpt'
 path_UNet_Film_10_epochs_L1_epoch2_Fourier_weight_5e5_3_10_Butterworth_high_pass_lr_1e3_adamw_1e2_25_thickness='/pscratch/sd/l/lindajin/LOGS/Nbody_Hydro/b7e663e255bf4e649cee1e66666e2f12/checkpoints/latest-epoch=9-step=1750.ckpt'
+path_UNet_Film_10_epochs_L1_epoch2_Fourier_weight_1e5_3_10_Butterworth_high_pass_lr_1e3_adamw_1e2_25_thickness_Nbody_overdensity = '/pscratch/sd/l/lindajin/LOGS/baryonize_DM/14353a9080854cd69f7119e0d2ec4718/checkpoints/latest-epoch=9-step=1750.ckpt'
 
+###Moving Fourier
+UNet_Film_Moving_highk_Fourier_ONLY_weight_1e5_10_Butterworth_high_pass_lr_1e3_adamw_1e2_25_thickness_Nbody_overdensity='/pscratch/sd/l/lindajin/LOGS/Nbody_Hydro/0e88adc4347d42b281b021c9810e23ed/checkpoints/latest-epoch=9-step=1750.ckpt'
 
 #BEST
-path_UNet_Film_10_epochs_L1_epoch2_Fourier_weight_1e5_3_10_Butterworth_high_pass_lr_1e3_adamw_1e2_25_thickness_Nbody_overdensity = '/pscratch/sd/l/lindajin/LOGS/baryonize_DM/14353a9080854cd69f7119e0d2ec4718/checkpoints/latest-epoch=9-step=1750.ckpt'
+Unet_Film_high_pass_Fourier_ONLY_1e5_3_10_Butterworth_lr_1e3_adamw_1e2_25_thickness_Nbody_overdensity = '/pscratch/sd/l/lindajin/LOGS/Nbody_Hydro/72980c14e46a423994686ce1399048f8/checkpoints/latest-epoch=9-step=1750.ckpt'
+
 
 
 # UNet + Divij's TF
