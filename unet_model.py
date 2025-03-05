@@ -22,8 +22,8 @@ class UNetFiLMNoSkip(nn.Module):
         self.use_fourier_features = use_fourier_features
         if use_fourier_features:
             self.fourier_features = FourierFeatures(
-                first=-2.0,
-                last=1,
+                first=6.0,
+                last=7.0,
                 step=1,
             )
         if use_fourier_features:
@@ -107,14 +107,15 @@ class UNetFiLMNoSkip(nn.Module):
         self.up4 = torch.utils.checkpoint(self.up4)
         self.outc = torch.utils.checkpoint(self.outc)
 
+
 class UNetFiLM(nn.Module):
-    def __init__(self, n_channels, n_classes, bilinear: bool = False, use_fourier_features: bool = False, high_pass: bool = True):
+    def __init__(self, n_channels, n_classes, bilinear: bool = False, use_fourier_features: bool = False):
         super().__init__()
         self.use_fourier_features = use_fourier_features
         if use_fourier_features:
             self.fourier_features = FourierFeatures(
-                first=-2.0,
-                last=1,
+                first=6.0,
+                last=7.0,
                 step=1,
             )
         if use_fourier_features:
@@ -133,8 +134,8 @@ class UNetFiLM(nn.Module):
         self.up1 = (Up_SkipConnection(1024, 512 // factor, bilinear))
         self.up2 = (Up_SkipConnection(512, 256 // factor, bilinear))
         self.up3 = (Up_SkipConnection(256, 128 // factor, bilinear))
-        self.up4 = (Up_SkipConnection(128, 64, bilinear))
-        self.outc = (OutConv(64, n_classes, high_pass))
+        self.up4 = (Up(128, 64, bilinear))
+        self.outc = (OutConv(64, n_classes))
         self.film = FiLM()
         self.MLP = nn.Sequential(
                 nn.Linear(6, 128),
@@ -147,6 +148,7 @@ class UNetFiLM(nn.Module):
                     )
        # Apply zero-weight initialization
         self._initialize_weights()
+        print('no skip connection on last layer')
 
     def _initialize_weights(self):
         for m in self.modules():
@@ -156,7 +158,7 @@ class UNetFiLM(nn.Module):
                     nn.init.constant_(m.bias, 0)
 
                 
-    def forward(self, x, cond=None): #cond(6,)-->MLP score(N,)=weight+bias
+    def forward(self, x, cond, inverse_blue_filter=False, high_pass = False, k_h = 3.0, order = 1.0): #cond(6,)-->MLP score(N,)=weight+bias
         param = self.MLP(cond)
         x = self.maybe_concat_fourier(x)    
         x1 = self.inc(x)
@@ -175,9 +177,9 @@ class UNetFiLM(nn.Module):
         x = self.film(x, param[:,4992:5504])
         x = self.up3(x, x2)
         x = self.film(x, param[:,5504:5760])
-        x = self.up4(x, x1)
+        x = self.up4(x) #, x1)
         x = self.film(x, param[:,5760:5888])
-        logits = self.outc(x)
+        logits = self.outc(x, inverse_blue_filter, high_pass, k_h, order)
         return logits
 
 
@@ -197,7 +199,8 @@ class UNetFiLM(nn.Module):
         self.up3 = torch.utils.checkpoint(self.up3)
         self.up4 = torch.utils.checkpoint(self.up4)
         self.outc = torch.utils.checkpoint(self.outc)
-        
+
+
         
 class ResBlockFiLM(nn.Module):
     def __init__(self, channels):

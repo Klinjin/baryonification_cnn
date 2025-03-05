@@ -162,7 +162,7 @@ class FourierFeatures(nn.Module):
 
         # Compute (2pi * 2^n) for n in freqs.
         freqs_exponent = self.freqs_exponent.to(dtype=x.dtype, device=x.device)  # (F, )
-        freqs = 2.0**freqs_exponent * 2 * pi  # (F, )
+        freqs = 2.0**freqs_exponent * 2 * torch.pi  # (F, )
         freqs = freqs.view(-1, *([1] * (x.dim() - 1)))  # (F, 1, 1, ...)
 
         # Compute (2pi * 2^n * x) for n in freqs.
