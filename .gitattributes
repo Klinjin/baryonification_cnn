@@ -1,1 +1,2 @@
 lightning_logs/**/*.yaml filter=lfs diff=lfs merge=lfs -text
+test_cnn_Nbody_Mtot.ipynb filter=lfs diff=lfs merge=lfs -text
